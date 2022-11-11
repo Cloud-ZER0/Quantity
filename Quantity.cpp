@@ -304,7 +304,7 @@ void Quantity::CoppyHelper(Quantity::ValueType* first, Quantity::ValueType* seco
 std::ostream& operator<<(std::ostream& os, const Quantity& q)
 {
 	if (q.size == 0) {
-		throw std::exception("EMPTY QUANTITY\n");
+		std::cout << "Empty Quantitiy\n";
 	}
 	for (auto i = 0; i < q.size; ++i) {
 		os <<  q.data[i] << ' ';

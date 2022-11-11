@@ -18,7 +18,8 @@ bool Task(int* first, int* second, std::size_t firstSize, std::size_t secondSize
 
 int main() {
 	Quantity q{1,2,3,4,5};
-	Quantity qq(q);
+	Quantity qq{20,22,33};
+	std::cout << q.CrossingQuantity(qq);
 	
 	return 0;
 }
