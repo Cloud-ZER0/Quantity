@@ -17,6 +17,11 @@ Quantity::~Quantity()
 
 Quantity::Quantity(const std::initializer_list<int>& args)
 {
+	if(args.size() == 0) {
+		capacity = 10;
+		data = new int[capacity];
+		return;
+	}
 	capacity = args.size() * 2;
 	try {
 		data = new int[capacity];
@@ -31,6 +36,7 @@ Quantity::Quantity(const std::initializer_list<int>& args)
 		throw e;
 	}
 	size = capacity / 2;
+	this->DeleteCoppies();
 }
 
 Quantity::Quantity(const Quantity& other): capacity(other.capacity), size(other.size) {
@@ -69,6 +75,7 @@ Quantity Quantity::operator+(const Quantity::ValueType& val_)
 {
 	Quantity coppy(*this);
 	coppy.PlusOperatinHelper(val_);
+	coppy.DeleteCoppies();
 	return coppy;
 }
 
@@ -77,6 +84,7 @@ Quantity operator+(const Quantity::ValueType& val_, Quantity& q)
 {
 	Quantity newQ(q);
 	newQ.PlusOperatinHelper(val_);
+	newQ.DeleteCoppies();
 	return newQ;
 }
 
@@ -91,6 +99,7 @@ Quantity& Quantity::operator+=(const Quantity::ValueType& val_)
 		data[size] = val_;
 		++size;
 	}
+	this->DeleteCoppies();
 	return *this;
 }
 
@@ -118,6 +127,7 @@ Quantity& operator+=(Quantity& first, const Quantity& second)
 		}
 	}
 	first.size += second.size;
+	first.DeleteCoppies();
 	return first;
 }
 
@@ -299,6 +309,36 @@ void Quantity::CoppyHelper(Quantity::ValueType* first, Quantity::ValueType* seco
 		std::cout << e.what() << '\n';
 		throw e;
 	}
+}
+
+void Quantity::DeleteCoppies()
+{
+	std::size_t sizeCounter = 0;
+	int buffer{};
+	for (auto i = 0; i < size; ++i) {
+		buffer = data[i];
+		if (buffer == INT32_MIN) continue;
+		for (auto j = 0; j < size; ++j) {
+			if (buffer == data[j] and j != i) {
+				data[j] = INT32_MIN;
+				++sizeCounter;
+ 			}
+		}
+	}
+
+	ValueType* buffer_ = new ValueType[capacity];
+	for (auto i = 0; i < size; ++i) {
+		for (auto j = i; j < size; ++j) {
+			if (data[j] != INT32_MIN) {
+				buffer_[i] = data[j];
+				data[j] = INT32_MIN;
+				break;
+			}
+		}
+	}
+	delete[] data;
+	data = buffer_;
+	size -= sizeCounter;
 }
 
 std::ostream& operator<<(std::ostream& os, const Quantity& q)

@@ -50,7 +50,8 @@ private:
 	void InitializerHelper(const ValueType* other);
 	void AllocateNewArray();
 	void PlusOperatinHelper(const ValueType& val_);
-	static void CoppyHelper(ValueType* first, ValueType* second, SizeType size); 	
+	static void CoppyHelper(ValueType* first, ValueType* second, SizeType size);
+	void DeleteCoppies();
 
 private:
 	ValueType* data = nullptr;
