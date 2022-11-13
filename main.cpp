@@ -18,8 +18,10 @@ bool Task(int* first, int* second, std::size_t firstSize, std::size_t secondSize
 
 int main() {
 	Quantity q{1,2,3,4,5};
-	Quantity qq{20,22,33};
-	std::cout << q.CrossingQuantity(qq);
+	Quantity qq{1, 3, 5, 7, 8 ,9};
+	std::cout << q + qq; // Работает
+	std::cout << q += qq; // Вот так не пиши (скорее всего проблема с приоритетом операторов, пытался фиксить, но бесполезно)
+	std::cout << (q += qq); // Со скобками всё  работает, с минусом так же
 	
 	return 0;
 }

@@ -108,7 +108,7 @@ Quantity& operator+=(Quantity& first, const Quantity& second)
 			first.data[i] = buffer[i];
 		}
 		for (auto j = first.size; j < second.size + first.size; ++j) {
-			first.data[j] = second.data[j];
+			first.data[j] = second.data[j - first.size];
 		}
 		delete[] buffer;
 	}
